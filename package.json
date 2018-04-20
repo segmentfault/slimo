@@ -1,0 +1,27 @@
+{
+  "name": "slimo",
+  "version": "1.0.0",
+  "description": "用于跨数据中心数据同步，基于mysql binlog的服务",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SegmentFault/slimo.git"
+  },
+  "keywords": [
+    "mysql",
+    "binlog"
+  ],
+  "author": "joyqi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SegmentFault/slimo/issues"
+  },
+  "homepage": "https://github.com/SegmentFault/slimo#readme",
+  "dependencies": {
+    "optimist": "^0.6.1",
+    "zongji": "^0.4.4"
+  }
+}
