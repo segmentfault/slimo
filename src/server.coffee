@@ -40,5 +40,5 @@ server = new ZJ
 server.on 'binlog', (e) ->
     e.dump()
 
-server.start includeEvents: ['tablemap', 'writerows', 'updaterows', 'deleterows']
+server.start includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows']
 

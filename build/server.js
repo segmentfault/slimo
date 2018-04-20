@@ -41,7 +41,7 @@
   });
 
   server.start({
-    includeEvents: ['tablemap', 'writerows', 'updaterows', 'deleterows']
+    includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows']
   });
 
 }).call(this);
