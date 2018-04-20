@@ -29,9 +29,7 @@
   target = parseAddress(argv.t);
 
   options = {
-    host: source[0],
-    port: source[1],
-    user: argv.source_user,
+    includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows'],
     password: argv.source_password + '',
     serverId: parseInt(argv.i)
   };
@@ -44,14 +42,16 @@
     options.binlogNextPos = argv.binlog_pos;
   }
 
-  server = new ZJ(options);
+  server = new ZJ({
+    host: source[0],
+    port: source[1],
+    user: argv.source_user
+  });
 
   server.on('binlog', function(e) {
     return e.dump();
   });
 
-  server.start({
-    includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows']
-  });
+  server.start(options);
 
 }).call(this);
