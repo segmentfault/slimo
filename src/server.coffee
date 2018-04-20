@@ -33,7 +33,6 @@ source = parseAddress argv.s
 target = parseAddress argv.t
 options =
     includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows']
-    password: argv.source_password + ''
     serverId: parseInt argv.i
 
 options.binlogName = argv.binlog_name if argv.binlog_name?
@@ -43,6 +42,7 @@ server = new ZJ
     host: source[0]
     port: source[1]
     user: argv.source_user
+    password: argv.source_password + ''
 
 server.on 'binlog', (e) ->
     e.dump()

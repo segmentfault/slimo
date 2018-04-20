@@ -30,7 +30,6 @@
 
   options = {
     includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows'],
-    password: argv.source_password + '',
     serverId: parseInt(argv.i)
   };
 
@@ -45,7 +44,8 @@
   server = new ZJ({
     host: source[0],
     port: source[1],
-    user: argv.source_user
+    user: argv.source_user,
+    password: argv.source_password + ''
   });
 
   server.on('binlog', function(e) {
