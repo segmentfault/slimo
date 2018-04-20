@@ -32,8 +32,9 @@ target = parseAddress argv.t
 
 server = new ZJ
     host: source[0]
+    port: source[1]
     user: argv.source_user
-    password: argv.source_password
+    password: argv.source_password + ''
     serverId: parseInt argv.i
 
 server.on 'binlog', (e) ->
