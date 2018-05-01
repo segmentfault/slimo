@@ -50,6 +50,8 @@ mysql = Mysql.createConnection
     database: argv.d + ''
     charset: argv.c
 
+mysql.query 'SET sql_mode = ""'
+
 server = new ZJ
     host: source[0]
     port: source[1]
