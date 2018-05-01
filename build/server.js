@@ -6,7 +6,7 @@
 
   Opt = require('optimist');
 
-  argv = Opt.usage('Usage: $0 [ -s localhost ] [ -t 192.168.1.2 ]').demand(['s', 't', 'source_user', 'target_user', 'binlog_name', 'binlog_pos']).boolean('h').alias('i', 'id').alias('s', 'source').alias('t', 'target').alias('h', 'help').alias('n', 'binlog_name').alias('p', 'binlog_pos').default('i', 10).default('source_password', null).default('target_password', null).argv;
+  argv = Opt.usage('Usage: $0 [ -s localhost ] [ -t 192.168.1.2 ]').demand(['s', 't', 'source_user', 'target_user', 'binlog_name', 'binlog_pos']).boolean('h').alias('i', 'id').alias('s', 'source').alias('t', 'target').alias('h', 'help').alias('n', 'binlog_name').alias('p', 'binlog_pos').alias('c', 'charset').default('i', 10).default('c', 'utf8mb4').default('source_password', null).default('target_password', null).argv;
 
   if (argv.h) {
     Opt.showHelp();
@@ -45,11 +45,16 @@
     host: source[0],
     port: source[1],
     user: argv.source_user,
-    password: argv.source_password + ''
+    password: argv.source_password + '',
+    charset: argv.c
   });
 
   server.on('binlog', function(e) {
     return e.dump();
+  });
+
+  server.on('error', function(e) {
+    return console.log(e);
   });
 
   server.start(options);

@@ -11,7 +11,9 @@ argv = Opt
     .alias 'h', 'help'
     .alias 'n', 'binlog_name'
     .alias 'p', 'binlog_pos'
+    .alias 'c', 'charset'
     .default 'i', 10
+    .default 'c', 'utf8mb4'
     .default 'source_password', null
     .default 'target_password', null
     .argv
@@ -43,9 +45,13 @@ server = new ZJ
     port: source[1]
     user: argv.source_user
     password: argv.source_password + ''
+    charset: argv.c
 
 server.on 'binlog', (e) ->
     e.dump()
+
+server.on 'error', (e) ->
+    console.log e
 
 server.start options
 
