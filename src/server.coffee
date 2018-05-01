@@ -1,9 +1,10 @@
 ZJ = require 'zongji'
 Opt = require 'optimist'
+Mysql = require 'mysql2'
 
 argv = Opt
     .usage 'Usage: $0 [ -s localhost ] [ -t 192.168.1.2 ]'
-    .demand ['s', 't', 'source_user', 'target_user', 'binlog_name', 'binlog_pos']
+    .demand ['s', 't', 'd', 'source_user', 'target_user', 'binlog_name', 'binlog_pos']
     .boolean 'h'
     .alias 'i', 'id'
     .alias 's', 'source'
@@ -12,6 +13,7 @@ argv = Opt
     .alias 'n', 'binlog_name'
     .alias 'p', 'binlog_pos'
     .alias 'c', 'charset'
+    .alias 'd', 'database'
     .default 'i', 10
     .default 'c', 'utf8mb4'
     .default 'source_password', null
@@ -40,6 +42,14 @@ options =
 options.binlogName = argv.binlog_name if argv.binlog_name?
 options.binlogNextPos = argv.binlog_pos if argv.binlog_pos?
 
+mysql = Mysql.createConnection
+    host: target[0]
+    port: target[1]
+    user: argv.target_user
+    password: argv.target_password + ''
+    database: argv.d + ''
+    charset: argv.c
+
 server = new ZJ
     host: source[0]
     port: source[1]
@@ -48,7 +58,12 @@ server = new ZJ
     charset: argv.c
 
 server.on 'binlog', (e) ->
-    e.dump()
+    console.log e.nextPosition
+
+    if e.getEventName() is 'query' and !e.query.match /^(BEGIN|COMMIT)\s*$/i
+        console.log e.query
+        #mysql.query e.query
+
 
 server.on 'error', (e) ->
     console.log e

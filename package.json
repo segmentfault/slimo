@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/SegmentFault/slimo#readme",
   "dependencies": {
+    "mysql2": "^1.5.3",
     "optimist": "^0.6.1",
     "zongji": "^0.4.4"
   }
