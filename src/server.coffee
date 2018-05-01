@@ -36,7 +36,7 @@ parseAddress = (address) ->
 source = parseAddress argv.s
 target = parseAddress argv.t
 options =
-    includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows']
+    includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows', 'rotate']
     serverId: parseInt argv.i
 
 options.binlogName = argv.binlog_name if argv.binlog_name?
@@ -58,7 +58,7 @@ server = new ZJ
     charset: argv.c
 
 server.on 'binlog', (e) ->
-    console.log e.nextPosition
+    console.log server.binlogName + ':' + e.nextPosition
 
     if e.getEventName() is 'query' and !e.query.match /^(BEGIN|COMMIT)\s*$/i
         console.log e.query

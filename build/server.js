@@ -31,7 +31,7 @@
   target = parseAddress(argv.t);
 
   options = {
-    includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows'],
+    includeEvents: ['unknown', 'query', 'tablemap', 'writerows', 'updaterows', 'deleterows', 'rotate'],
     serverId: parseInt(argv.i)
   };
 
@@ -61,7 +61,7 @@
   });
 
   server.on('binlog', function(e) {
-    console.log(e.nextPosition);
+    console.log(server.binlogName + ':' + e.nextPosition);
     if (e.getEventName() === 'query' && !e.query.match(/^(BEGIN|COMMIT)\s*$/i)) {
       return console.log(e.query);
     }
