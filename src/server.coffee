@@ -61,8 +61,9 @@ server.on 'binlog', (e) ->
     console.log server.binlogName + ':' + e.nextPosition
 
     if e.getEventName() is 'query' and !e.query.match /^(BEGIN|COMMIT)\s*$/i
-        console.log e.query
-        #mysql.query e.query
+        #console.log e.query
+        mysql.query e.query, (err, result) ->
+            console.log err if err?
 
 
 server.on 'error', (e) ->

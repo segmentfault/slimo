@@ -63,11 +63,15 @@
   server.on('binlog', function(e) {
     console.log(server.binlogName + ':' + e.nextPosition);
     if (e.getEventName() === 'query' && !e.query.match(/^(BEGIN|COMMIT)\s*$/i)) {
-      return console.log(e.query);
+      //console.log e.query
+      return mysql.query(e.query, function(err, result) {
+        if (err != null) {
+          return console.log(err);
+        }
+      });
     }
   });
 
-  //mysql.query e.query
   server.on('error', function(e) {
     return console.log(e);
   });
